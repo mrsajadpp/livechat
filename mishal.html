@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mishal - Chat</title>
+</head>
+
+<body>
+    <div id="out">
+
+    </div>
+    <form id="form" onsubmit="return false;">
+        <input type="text" id="inp" autofocus>
+        <button id="btn">send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const form = document.getElementById('form')
+        form.addEventListener('submit', () => {
+            if (document.getElementById('inp').value == '') {
+
+            } else {
+                let newP = document.createElement('p')
+                newP.style.backgroundColor = 'magenta';
+                newP.style.color = 'white';
+                document.getElementById('out').appendChild(newP)
+                newP.innerHTML = 'You: ' + document.getElementById('inp').value
+                socket.emit('sajad', document.getElementById('inp').value)
+                document.getElementById('inp').value = ''
+            }
+        })
+        socket.on('sajad', (msg) => {
+            let newP = document.createElement('p')
+            newP.style.backgroundColor = 'green';
+            newP.style.color = 'white';
+            document.getElementById('out').appendChild(newP)
+            newP.innerHTML = 'Sajad: ' + msg
+        })
+    </script>
+</body>
+
+</html>
